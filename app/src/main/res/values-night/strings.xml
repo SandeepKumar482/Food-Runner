@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="favourite_restaurants">Favourites Restaurants</string>
+    <string name="order_history">Order History</string>
+    <string name="faqs">FAQs</string>
+    <string name="log_out">LogOut</string>
+    <string name="Open_drawer">open drawer</string>
+    <string name="Close_drawer">close drawer</string>
+</resources>
