@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso
 
 class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Restaurant>): RecyclerView.Adapter<HomeRecyclerAdapter.HomeViewHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-      val view= LayoutInflater.from(parent.context).inflate(R.layout.recycler_home_single_row,parent,false)
+        val view= LayoutInflater.from(parent.context).inflate(R.layout.recycler_home_single_row,parent,false)
         return HomeViewHolder(view)
     }
 
@@ -32,7 +32,6 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         val listOfFav = GetFavAsyncTask(context).execute().get()
 
         if (listOfFav.isNotEmpty() && listOfFav.contains(restaurant.RestaurantId.toString())) {
-
             holder.imgFav.setBackgroundResource(R.drawable.ic_fiill_favourite)
         } else {
             holder.imgFav.setBackgroundResource(R.drawable.ic_favourite)
@@ -67,7 +66,7 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
     }
 
     override fun getItemCount(): Int {
-      return itemList.size
+        return itemList.size
     }
     class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val txtRestaurant:TextView= view.findViewById(R.id.txtRestaurantName)
@@ -79,7 +78,7 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
     }
 
     class GetFavAsyncTask(context: Context) : AsyncTask<Void, Void, List<String>>() {
-        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurants-db")
+        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "resturants-db")
             .build()
 
         override fun doInBackground(vararg params: Void?): List<String> {
@@ -95,7 +94,8 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
     class DBAsyncTask(val context: Context,val restaurantEntity: RestaurantEntity,val mode:Int) :
         AsyncTask<Void, Void, Boolean>(){
 
-        /*
+
+/*
        Mode 1 -> Check DB if the restaurant is favourite or not
        Mode 2 -> Save the restaurant into DB as favourite
        Mode 3 -> Remove the favourite restaurant

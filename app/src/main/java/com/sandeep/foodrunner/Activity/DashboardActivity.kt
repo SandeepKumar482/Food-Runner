@@ -56,7 +56,7 @@ class DashboardActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(
                         R.id.frameLayout,
                         FavouritesFragment()
-                    ).addToBackStack("Favourites").commit()
+                    ).commit()
                     drawerLayout.closeDrawers()
                     supportActionBar?.title="Favourites"
                 }
@@ -64,7 +64,7 @@ class DashboardActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(
                         R.id.frameLayout,
                         UserProfileFragment()
-                    ).addToBackStack("User Profile").commit()
+                    ).commit()
                     drawerLayout.closeDrawers()
                     supportActionBar?.title="User Profile"
                 }
@@ -72,7 +72,7 @@ class DashboardActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(
                         R.id.frameLayout,
                         OrderHistoryFragment()
-                    ).addToBackStack("Order History").commit()
+                    ).commit()
                     drawerLayout.closeDrawers()
                     supportActionBar?.title="Order History"
                 }
@@ -80,7 +80,7 @@ class DashboardActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(
                         R.id.frameLayout,
                         FAQsFragment()
-                    ).addToBackStack("FAQs").commit()
+                    ).commit()
                     drawerLayout.closeDrawers()
                     supportActionBar?.title="FAQs"
 
@@ -89,7 +89,7 @@ class DashboardActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(
                         R.id.frameLayout,
                         LogOutFragment()
-                    ).addToBackStack("Logout").commit()
+                    ).commit()
                             drawerLayout.closeDrawers()
                     supportActionBar?.title="LogOut"
                 }
