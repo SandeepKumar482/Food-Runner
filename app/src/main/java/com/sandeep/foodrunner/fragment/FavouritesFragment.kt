@@ -24,6 +24,7 @@ class FavouritesFragment : Fragment() {
     private lateinit var recyclerAdapter: HomeRecyclerAdapter
     private lateinit var progressLayout: RelativeLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var noFav:RelativeLayout
     var dbResList= arrayListOf<Restaurant>()
 
     override fun onCreateView(
@@ -37,7 +38,8 @@ class FavouritesFragment : Fragment() {
         layoutManager = LinearLayoutManager(activity)
 
 
-
+         noFav=view.findViewById(R.id.noFav)
+        noFav.visibility=View.GONE
         progressLayout = view.findViewById(R.id.progressLayout)
 
         progressBar = view.findViewById(R.id.progressBar)
@@ -45,7 +47,13 @@ class FavouritesFragment : Fragment() {
         progressLayout.visibility = View.VISIBLE
 
         val resList = RetrieveFavourites(activity as Context).execute().get()
-        for (i in resList){
+
+        if(resList.isEmpty()){
+           noFav.visibility=View.VISIBLE
+            progressLayout.visibility=View.GONE
+        }
+        else{
+            for (i in resList){
             dbResList.add(
                 Restaurant(
                     i.RestaurantId.toString(),
@@ -55,6 +63,7 @@ class FavouritesFragment : Fragment() {
                     i.Image
                 )
             )
+        }
         }
 
         if (activity != null) {
