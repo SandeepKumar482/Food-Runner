@@ -40,11 +40,11 @@ class HomeFragment : Fragment() {
     val restaurantList = arrayListOf<Restaurant>()
     private var ratingComparator = Comparator<Restaurant> { res1, res2 ->
 
-        if (res1.RestaurantRatting.compareTo(res2.RestaurantRatting, true) == 0) {
+        if (res1.RestaurantRating.compareTo(res2.RestaurantRating, true) == 0) {
             // sort according to name if rating is same
             res1.RestaurantName.compareTo(res2.RestaurantName, true)
         } else {
-            res1.RestaurantRatting.compareTo(res2.RestaurantRatting, true)
+            res1.RestaurantRating.compareTo(res2.RestaurantRating, true)
         }
     }
 
@@ -177,42 +177,7 @@ class HomeFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    class DBAsyncTask(val context: Context,val restaurantEntity: RestaurantEntity,val mode:Int) :AsyncTask<Void,Void,Boolean>(){
 
-        /*
-       Mode 1 -> Check DB if the restaurant is favourite or not
-       Mode 2 -> Save the restaurant into DB as favourite
-       Mode 3 -> Remove the favourite restaurant
-       * */
-
-        val db= Room.databaseBuilder(context,RestaurantDatabase::class.java,"resturants-db").build()
-
-        override fun doInBackground(vararg params: Void?): Boolean {
-            when(mode){
-                1-> {
-                    // Check DB if the restaurant is favourite or not
-                    val restaurant :RestaurantEntity=db.restaurantDao().getBookById(restaurantEntity.RestaurantId.toString())
-                    db.close()
-                    return restaurant!=null
-
-                }
-                2-> {
-                    //Save the restaurant into DB as favourite
-                    db.restaurantDao().insertRestaurant(restaurantEntity)
-                    db.close()
-                    return true
-                }
-                3-> {
-                    //Remove From Favourites
-                    db.restaurantDao().deleteBook(restaurantEntity)
-                    db.close()
-                    return true
-                }
-            }
-            return false
-
-        }
-    }
 }
 
 

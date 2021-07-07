@@ -6,10 +6,24 @@
     android:layout_height="match_parent"
     tools:context="fragment.FavouritesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/favouriteRecyclerView"
+        android:padding="19dp"/>
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Favourites Fragment" />
+        android:background="#fff">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

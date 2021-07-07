@@ -1,13 +1,18 @@
 package com.sandeep.foodrunner.adapter
 
 import android.content.Context
+import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.sandeep.foodrunner.R
+import com.sandeep.foodrunner.database.RestaurantDatabase
+import com.sandeep.foodrunner.database.RestaurantEntity
 import com.sandeep.foodrunner.model.Restaurant
 import com.squareup.picasso.Picasso
 
@@ -22,9 +27,42 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         val restaurant=itemList[position]
         holder.txtRestaurant.text=restaurant.RestaurantName
         holder.txtPrice.text= restaurant.FoodPrice
-        holder.txtRestaurantRatings.text=restaurant.RestaurantRatting
+        holder.txtRestaurantRatings.text=restaurant.RestaurantRating
         Picasso.get().load(restaurant.RestaurantImage).error(R.mipmap.ic_launcher).into(holder.imgRestaurant)
-        
+        val listOfFav = GetFavAsyncTask(context).execute().get()
+
+        if (listOfFav.isNotEmpty() && listOfFav.contains(restaurant.RestaurantId.toString())) {
+
+            holder.imgFav.setBackgroundResource(R.drawable.ic_fiill_favourite)
+        } else {
+            holder.imgFav.setBackgroundResource(R.drawable.ic_favourite)
+        }
+
+        holder.imgFav.setOnClickListener {
+            val restaurantEntity = RestaurantEntity(
+                restaurant.RestaurantId.toInt(),
+                restaurant.RestaurantName,
+                restaurant.RestaurantRating,
+                restaurant.FoodPrice,
+                restaurant.RestaurantImage
+            )
+            if (!DBAsyncTask(context, restaurantEntity, 1).execute().get()) {
+                val async = DBAsyncTask(context, restaurantEntity, 2).execute()
+                val data = async.get()
+                if (data) {
+                    Toast.makeText(context,"Added to favourites", Toast.LENGTH_SHORT).show()
+                    holder.imgFav.setBackgroundResource(R.drawable.ic_fiill_favourite)
+                }
+            } else {
+                val async = DBAsyncTask(context, restaurantEntity, 3).execute()
+                val data = async.get()
+
+                if (data) {
+                    Toast.makeText(context,"Removed favourites",Toast.LENGTH_SHORT).show()
+                    holder.imgFav.setBackgroundResource(R.drawable.ic_favourite)
+                }
+            }
+        }
 
     }
 
@@ -40,5 +78,55 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
 
     }
 
+    class GetFavAsyncTask(context: Context) : AsyncTask<Void, Void, List<String>>() {
+        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurants-db")
+            .build()
 
+        override fun doInBackground(vararg params: Void?): List<String> {
+            val list = db.restaurantDao().getAllRestaurants()
+            val listOfIds = arrayListOf<String>()
+            for (i in list) {
+                listOfIds.add(i.RestaurantId.toString())
+            }
+            return listOfIds
+        }
+    }
+
+    class DBAsyncTask(val context: Context,val restaurantEntity: RestaurantEntity,val mode:Int) :
+        AsyncTask<Void, Void, Boolean>(){
+
+        /*
+       Mode 1 -> Check DB if the restaurant is favourite or not
+       Mode 2 -> Save the restaurant into DB as favourite
+       Mode 3 -> Remove the favourite restaurant
+       * */
+
+        val db= Room.databaseBuilder(context, RestaurantDatabase::class.java,"resturants-db").build()
+
+        override fun doInBackground(vararg params: Void?): Boolean {
+            when(mode){
+                1-> {
+                    // Check DB if the restaurant is favourite or not
+                    val restaurant :RestaurantEntity=db.restaurantDao().getRestaurantById(restaurantEntity.RestaurantId.toString())
+                    db.close()
+                    return restaurant!=null
+
+                }
+                2-> {
+                    //Save the restaurant into DB as favourite
+                    db.restaurantDao().insertRestaurant(restaurantEntity)
+                    db.close()
+                    return true
+                }
+                3-> {
+                    //Remove From Favourites
+                    db.restaurantDao().deleteRestaurant(restaurantEntity)
+                    db.close()
+                    return true
+                }
+            }
+            return false
+
+        }
+    }
 }

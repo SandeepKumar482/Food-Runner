@@ -11,11 +11,11 @@ interface RestaurantDao {
     fun insertRestaurant(restaurantEntity: RestaurantEntity)
 
     @Delete
-    fun deleteBook(restaurantEntity: RestaurantEntity)
+    fun deleteRestaurant(restaurantEntity: RestaurantEntity)
 
     @Query("SELECT * FROM Restaurants")
-    fun getAllBooks(): List<RestaurantEntity>
+    fun getAllRestaurants(): List<RestaurantEntity>
 
     @Query("SELECT * FROM Restaurants WHERE RestaurantId = :restaurant_id")
-    fun getBookById(restaurant_id: String): RestaurantEntity
+    fun getRestaurantById(restaurant_id: String): RestaurantEntity
 }
