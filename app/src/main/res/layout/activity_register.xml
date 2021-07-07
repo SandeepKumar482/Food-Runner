@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:fillViewport="true"
     android:orientation="vertical"
-    tools:context=".Activity.RegisterActivity">
+    tools:context=".activity.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

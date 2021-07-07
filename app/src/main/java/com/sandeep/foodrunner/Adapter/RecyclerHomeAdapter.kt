@@ -1,4 +1,4 @@
-package com.sandeep.foodrunner.Adapter
+package com.sandeep.foodrunner.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -23,7 +23,8 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         holder.txtRestaurant.text=restaurant.RestaurantName
         holder.txtPrice.text= restaurant.FoodPrice
         holder.txtRestaurantRatings.text=restaurant.RestaurantRatting
-        Picasso.get().load(restaurant.RestaurantImage).error(R.drawable.app_logo).into(holder.imgRestaurant)
+        Picasso.get().load(restaurant.RestaurantImage).error(R.mipmap.ic_launcher).into(holder.imgRestaurant)
+        
 
     }
 
@@ -35,6 +36,7 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         val txtPrice:TextView=view.findViewById(R.id.txtPrice)
         val imgRestaurant:ImageView=view.findViewById(R.id.imgRestaurant)
         val txtRestaurantRatings:TextView=view.findViewById(R.id.txtRestaurantRating)
+        val imgFav:ImageView=view.findViewById(R.id.imgFavourite)
 
     }
 

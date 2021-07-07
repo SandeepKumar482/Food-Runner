@@ -1,5 +1,5 @@
 
-package com.sandeep.foodrunner.Activity
+package com.sandeep.foodrunner.activity
 
 import android.os.Bundle
 import android.view.MenuItem
