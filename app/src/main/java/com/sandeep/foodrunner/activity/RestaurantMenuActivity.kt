@@ -27,6 +27,7 @@ import com.sandeep.foodrunner.adapter.HomeRecyclerAdapter
 import com.sandeep.foodrunner.adapter.RestaurantMenuAdapter
 import com.sandeep.foodrunner.database.OrderEntity
 import com.sandeep.foodrunner.database.RestaurantDatabase
+import com.sandeep.foodrunner.database.RestaurantEntity
 import com.sandeep.foodrunner.model.RestaurantMenu
 import com.sandeep.foodrunner.util.ConnectionManager
 import com.sandeep.foodrunner.util.SessionManager
@@ -187,6 +188,12 @@ class RestaurantMenuActivity : AppCompatActivity() {
                     db.orderDao().deleteOrder(OrderEntity(restaurantId, foodItems))
                     db.close()
                     return true
+                }
+                3->{
+
+                    val restaurant : OrderEntity =db.orderDao().checkById()
+                    db.close()
+                    return !=null
                 }
             }
             return false
