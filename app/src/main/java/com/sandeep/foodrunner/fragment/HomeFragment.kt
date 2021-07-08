@@ -95,7 +95,6 @@ class HomeFragment : Fragment() {
                             recyclerHome.adapter = recyclerAdapter
                             recyclerHome.layoutManager = layoutManager
 
-
                         }
 
                     } else {

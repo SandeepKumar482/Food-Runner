@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import com.sandeep.foodrunner.R
 
 
-class LogOutFragment : Fragment() {
-
+class LogoutFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

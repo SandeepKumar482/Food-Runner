@@ -15,6 +15,7 @@ import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -71,6 +72,8 @@ class RestaurantMenuActivity : AppCompatActivity() {
         imgFav = findViewById(R.id.imgFav)
 
         layoutManager = LinearLayoutManager(this@RestaurantMenuActivity)
+        btnGoToCart.setOnClickListener {
+            startActivity(Intent(this@RestaurantMenuActivity, CartActivity::class.java) )}
 
 
         if (intent != null) {
@@ -83,6 +86,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
             } else {
                 imgFav.setBackgroundResource(R.drawable.ic_favourite)
             }
+
 
         } else {
             finish()
@@ -199,5 +203,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
             return false
         }
     }
+
+
 
 }

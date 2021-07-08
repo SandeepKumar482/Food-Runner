@@ -88,7 +88,7 @@ class DashboardActivity : AppCompatActivity() {
                 R.id.logOut ->{
                     supportFragmentManager.beginTransaction().replace(
                         R.id.frameLayout,
-                        LogOutFragment()
+                        LogoutFragment()
                     ).commit()
                             drawerLayout.closeDrawers()
                     supportActionBar?.title="LogOut"
