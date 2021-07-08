@@ -19,6 +19,7 @@ interface OrderDao{
 
     @Query("DELETE FROM orders WHERE res_Id = :resId")
     fun deleteOrders(resId: String)
+
     @Query("SELECT * from orders WHERE res_id=:resId And foodId=:foodId")
     fun checkById(resId: String,foodId:String)
 }

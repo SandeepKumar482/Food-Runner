@@ -48,35 +48,30 @@ class RestaurantMenuAdapter(val context :Context,val itemList :ArrayList<Restaur
 
         }
         holder.btnAdd.setOnClickListener {
-//            if(foodList.isNotEmpty()&&foodList.contains(listItem.id)){
-//                holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.Yellow))
-//                holder.btnAdd.text="Remove"
-//            }
-//            else{
-//                holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary))
-//                holder.btnAdd.text="Add"
-//
-            if (!RestaurantMenuActivity.CartItems(context, listItem.restaurant_id,listItem.id, 1).execute().get()) {
-                val async = HomeRecyclerAdapter.DBAsyncTask(context, restaurantEntity, 2).execute()
+
+            if (!RestaurantMenuActivity.CartItems(context, listItem.restaurant_id,listItem.id, 3).execute().get()) {
+                val async =RestaurantMenuActivity.CartItems(context, listItem.restaurant_id,listItem.id, 1).execute()
                 val data = async.get()
                 if (data) {
-                    Toast.makeText(context,"Added to favourites", Toast.LENGTH_SHORT).show()
-                    holder.imgFav.setBackgroundResource(R.drawable.ic_fiill_favourite)
+                    Toast.makeText(context,"Added to Cart", Toast.LENGTH_SHORT).show()
+                    holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.Yellow))
+                    holder.btnAdd.text="Remove"
                 }
             } else {
-                val async = HomeRecyclerAdapter.DBAsyncTask(context, restaurantEntity, 3).execute()
+                val async = RestaurantMenuActivity.CartItems(context, listItem.restaurant_id,listItem.id, 2).execute()
                 val data = async.get()
 
                 if (data) {
-                    Toast.makeText(context,"Removed favourites",Toast.LENGTH_SHORT).show()
-                    holder.imgFav.setBackgroundResource(R.drawable.ic_favourite)
+                    Toast.makeText(context,"Removed from Cart",Toast.LENGTH_SHORT).show()
+                    holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary))
+                    holder.btnAdd.text="Add"
                 }
             }
         }
 
 
 
-        }
+
 
     }
 

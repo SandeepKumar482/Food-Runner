@@ -191,9 +191,9 @@ class RestaurantMenuActivity : AppCompatActivity() {
                 }
                 3->{
 
-                    val restaurant : OrderEntity =db.orderDao().checkById()
+                    val order : Unit =db.orderDao().checkById(restaurantId.toString(),foodItems.toString())
                     db.close()
-                    return !=null
+                    return order !=null
                 }
             }
             return false
