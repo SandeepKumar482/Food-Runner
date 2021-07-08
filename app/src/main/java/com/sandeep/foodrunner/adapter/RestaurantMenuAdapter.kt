@@ -36,27 +36,31 @@ class RestaurantMenuAdapter(val context :Context,val itemList :ArrayList<Restaur
         holder.txtDishName.text=listItem.dish_name
         holder.txtCost.text=listItem.cost
         holder.txtCount.text=((position)+1).toString()
-        val foodList=GetFavAsyncTask(context).execute().get()
+        val foodList=GetOrderAsyncTask(context).execute().get()
         if(foodList.isNotEmpty()&&foodList.contains(listItem.id)){
             holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.Yellow))
             holder.btnAdd.text="Remove"
-            holder.btnAdd.setOnClickListener {
-                RestaurantMenuActivity.CartItems(context,listItem.restaurant_id,listItem.id,2)
-                holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary))
-                holder.btnAdd.text="Add"
-                Toast.makeText(context,"Removed From Cart",Toast.LENGTH_SHORT)
-            }
+
         }
         else{
             holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary))
             holder.btnAdd.text="Add"
-            holder.btnAdd.setOnClickListener {
-                RestaurantMenuActivity.CartItems(context,listItem.restaurant_id,listItem.id,1)
+
+        }
+        holder.btnAdd.setOnClickListener {
+            if(foodList.isNotEmpty()&&foodList.contains(listItem.id)){
                 holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.Yellow))
                 holder.btnAdd.text="Remove"
-                Toast.makeText(context,"Added to Cart",Toast.LENGTH_SHORT)
 
             }
+            else{
+                holder.btnAdd.setBackgroundColor(ContextCompat.getColor(context,R.color.colorPrimary))
+                holder.btnAdd.text="Add"
+
+            }
+
+
+
         }
 
     }
@@ -65,7 +69,7 @@ class RestaurantMenuAdapter(val context :Context,val itemList :ArrayList<Restaur
         return itemList.size
     }
 
-    class GetFavAsyncTask(context: Context) : AsyncTask<Void, Void, List<String>>() {
+    class GetOrderAsyncTask(context: Context) : AsyncTask<Void, Void, List<String>>() {
         val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurants-db")
             .build()
 

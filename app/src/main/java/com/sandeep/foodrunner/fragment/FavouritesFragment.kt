@@ -81,7 +81,7 @@ class FavouritesFragment : Fragment() {
     class RetrieveFavourites(val context: Context) : AsyncTask<Void, Void, List<RestaurantEntity>>() {
 
         override fun doInBackground(vararg p0: Void?): List<RestaurantEntity> {
-            val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "resturants-db").build()
+            val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurants-db").build()
 
             return db.restaurantDao().getAllRestaurants()
         }

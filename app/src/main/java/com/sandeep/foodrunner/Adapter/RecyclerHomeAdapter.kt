@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.sandeep.foodrunner.R
+import com.sandeep.foodrunner.activity.RestaurantMenuActivity
 import com.sandeep.foodrunner.database.RestaurantDatabase
 import com.sandeep.foodrunner.database.RestaurantEntity
 import com.sandeep.foodrunner.model.Restaurant
@@ -29,7 +30,7 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         holder.txtPrice.text= restaurant.FoodPrice
         holder.txtRestaurantRatings.text=restaurant.RestaurantRating
         holder.rlContent.setOnClickListener {
-            val intent=Intent(context,RestaurantMenu::class.java)
+            val intent=Intent(context,RestaurantMenuActivity::class.java)
             intent.putExtra("res_id",restaurant.RestaurantId)
             context.startActivity(intent)
 

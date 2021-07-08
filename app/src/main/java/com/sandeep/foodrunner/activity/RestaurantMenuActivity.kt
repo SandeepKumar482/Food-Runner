@@ -1,3 +1,4 @@
+
 package com.sandeep.foodrunner.activity
 
 import android.app.Activity
@@ -29,6 +30,7 @@ import com.sandeep.foodrunner.database.RestaurantDatabase
 import com.sandeep.foodrunner.model.RestaurantMenu
 import com.sandeep.foodrunner.util.ConnectionManager
 import com.sandeep.foodrunner.util.SessionManager
+import org.json.JSONObject
 
 class RestaurantMenuActivity : AppCompatActivity() {
 
@@ -69,20 +71,42 @@ class RestaurantMenuActivity : AppCompatActivity() {
 
         layoutManager = LinearLayoutManager(this@RestaurantMenuActivity)
 
-        val listOfFav = HomeRecyclerAdapter.GetFavAsyncTask(this).execute().get()
 
-        if (listOfFav.isNotEmpty() && listOfFav.contains(restaurantId)) {
+        if (intent != null) {
+            restaurantId = intent.getStringExtra("res_id").toString()
+            val listOfFav = HomeRecyclerAdapter.GetFavAsyncTask(this).execute().get()
 
-            imgFav.setBackgroundResource(R.drawable.ic_fiill_favourite)
+            if (listOfFav.isNotEmpty() && listOfFav.contains(restaurantId)) {
+
+                imgFav.setBackgroundResource(R.drawable.ic_fiill_favourite)
+            } else {
+                imgFav.setBackgroundResource(R.drawable.ic_favourite)
+            }
+
         } else {
-            imgFav.setBackgroundResource(R.drawable.ic_favourite)
+            finish()
+            Toast.makeText(
+                this,
+                "Some unexpected Error occurred!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        if (restaurantId == "100") {
+            finish()
+            Toast.makeText(
+                this,
+                "Some unexpected Error occurred!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         val queue= Volley.newRequestQueue(this@RestaurantMenuActivity)
-        val url="http://13.235.250.119/v2/restaurants/fetch_result/id"
+        val url= "http://13.235.250.119/v2/restaurants/fetch_result/$restaurantId"
 
         if(ConnectionManager().checkConnectivity(this@RestaurantMenuActivity)){
+
             val jsonObjectRequest=object :JsonObjectRequest(Method.GET,url,null,Response.Listener {
+                print("Result is $it")
                 try {
                     val obj2 = it.getJSONObject("data")
                     val success = obj2.getBoolean("success")
