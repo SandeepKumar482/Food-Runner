@@ -1,19 +1,19 @@
 package com.sandeep.foodrunner.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.sandeep.foodrunner.R
 import com.sandeep.foodrunner.database.RestaurantDatabase
 import com.sandeep.foodrunner.database.RestaurantEntity
 import com.sandeep.foodrunner.model.Restaurant
+import com.sandeep.foodrunner.model.RestaurantMenu
 import com.squareup.picasso.Picasso
 
 
@@ -28,6 +28,12 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         holder.txtRestaurant.text=restaurant.RestaurantName
         holder.txtPrice.text= restaurant.FoodPrice
         holder.txtRestaurantRatings.text=restaurant.RestaurantRating
+        holder.rlContent.setOnClickListener {
+            val intent=Intent(context,RestaurantMenu::class.java)
+            intent.putExtra("res_id",restaurant.RestaurantId)
+            context.startActivity(intent)
+
+        }
         Picasso.get().load(restaurant.RestaurantImage).error(R.mipmap.ic_launcher).into(holder.imgRestaurant)
         val listOfFav = GetFavAsyncTask(context).execute().get()
 
@@ -74,11 +80,13 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
         val imgRestaurant:ImageView=view.findViewById(R.id.imgRestaurant)
         val txtRestaurantRatings:TextView=view.findViewById(R.id.txtRestaurantRating)
         val imgFav:ImageView=view.findViewById(R.id.imgFavourite)
+        val llContent:LinearLayout=view.findViewById(R.id.llContent)
+        val rlContent:RelativeLayout=view.findViewById(R.id.rlContent)
 
     }
 
     class GetFavAsyncTask(context: Context) : AsyncTask<Void, Void, List<String>>() {
-        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "resturants-db")
+        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurants-db")
             .build()
 
         override fun doInBackground(vararg params: Void?): List<String> {
@@ -101,7 +109,7 @@ class HomeRecyclerAdapter(val context:Context, private val itemList:ArrayList<Re
        Mode 3 -> Remove the favourite restaurant
        * */
 
-        val db= Room.databaseBuilder(context, RestaurantDatabase::class.java,"resturants-db").build()
+        val db= Room.databaseBuilder(context, RestaurantDatabase::class.java,"restaurants-db").build()
 
         override fun doInBackground(vararg params: Void?): Boolean {
             when(mode){

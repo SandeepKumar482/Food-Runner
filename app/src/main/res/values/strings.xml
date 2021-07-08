@@ -29,4 +29,7 @@
     <string name="Open_drawer">open drawer</string>
     <string name="Close_drawer">close drawer</string>
     <string name="action_sort">Sort</string>
+    <string name="choose_from_the_menu_listed_below">Choose From Menu Listed below</string>
+    <string name="proceed_to_cart">Proceed To Cart</string>
+    <string name="preference_file_name">Food_App</string>
 </resources>
